@@ -1,0 +1,8 @@
+﻿sport_name: "template_sport"
+version: "1.0.0"
+models:
+  detection: "yolov8n.pt"
+  pose: "yolov8n-pose.pt"
+parameters:
+  confidence_threshold: 0.5
+  smoothing_window: 5

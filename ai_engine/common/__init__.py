@@ -1,0 +1,1 @@
+﻿"""Shared AI engine utilities."""

@@ -1,0 +1,29 @@
+﻿__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+ENV/
+.venv/
+
+# Data and Model Weights
+*.pt
+*.pth
+*.onnx
+*.engine
+data/raw/*
+data/processed/*
+data/datasets/*
+data/outputs/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/datasets/.gitkeep
+!data/outputs/.gitkeep
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

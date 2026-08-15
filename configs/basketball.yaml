@@ -1,0 +1,7 @@
+﻿sport_name: "basketball"
+models:
+  detection: "basketball_yolov8.pt"
+  tracking: "bytetrack"
+court:
+  length_m: 28.0
+  width_m: 15.0

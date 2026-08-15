@@ -1,0 +1,7 @@
+﻿sport_name: "cricket"
+models:
+  ball_tracking: "tracknet_cricket.pt"
+  pose: "yolov8x-pose.pt"
+pitch:
+  pitch_length_m: 20.12
+  crease_distance_m: 1.22

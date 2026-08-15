@@ -1,0 +1,6 @@
+﻿sport_name: "volleyball"
+models:
+  pose: "yolov8m-pose.pt"
+court:
+  length_m: 18.0
+  width_m: 9.0

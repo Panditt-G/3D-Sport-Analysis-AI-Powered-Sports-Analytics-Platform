@@ -1,0 +1,6 @@
+﻿sport_name: "football"
+models:
+  player_detection: "football_yolov8x.pt"
+pitch:
+  length_m: 105.0
+  width_m: 68.0

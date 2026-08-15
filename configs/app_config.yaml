@@ -1,0 +1,14 @@
+﻿app:
+  name: "Sports AI Analytics Platform"
+  version: "1.0.0"
+  env: "development"
+
+device:
+  use_cuda: true
+  device_id: 0
+  precision: "fp16"
+
+backend:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4

@@ -1,0 +1,7 @@
+﻿sport_name: "running"
+models:
+  pose: "yolov8m-pose.pt"
+metrics:
+  fps: 30
+  runner_height_cm: 175
+  speed_smoothing_alpha: 0.2
