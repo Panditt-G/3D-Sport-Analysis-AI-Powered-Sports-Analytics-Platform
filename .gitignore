@@ -1,4 +1,4 @@
-﻿__pycache__/
+__pycache__/
 *.py[cod]
 *$py.class
 *.so
@@ -22,8 +22,13 @@ data/outputs/*
 !data/datasets/.gitkeep
 !data/outputs/.gitkeep
 
+# Node dependencies & builds
+frontend/node_modules/
+frontend/dist/
+
 # IDE and OS
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
