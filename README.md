@@ -1,3 +1,6 @@
+# 3D-Sport-Analysis-AI-Powered-Sports-Analytics-Platform
+AI-powered sports analytics platform for athlete movement, pose, tracking, and sport-specific performance analysis.
+
 # 🏆 Sports AI Analytics Platform
 
 A modular, plug-and-play **Computer Vision & Biomechanics Analytics Platform** designed for multi-sport video analysis using **Python, MediaPipe, OpenCV, FastAPI, React 18, and Tailwind CSS v3**.
