@@ -4,37 +4,13 @@ from ai_engine.base.base_pipeline import BaseSportPipeline
 from ai_engine.base.base_analytics import BaseSportAnalytics
 
 # Sport metadata: description, icon, supported metrics
-# New sports auto-register here when they use @SportRegistry.register_pipeline
+# Pre-configured metadata for running pipeline
 SPORT_METADATA = {
-    "cricket": {
-        "display_name": "Cricket",
-        "description": "Bowling speed, batting pose, shot direction analysis",
-        "icon": "🏏",
-        "metrics": ["bowling_speed_kmh", "shot_direction_deg", "crease_occupancy"],
-    },
     "running": {
         "display_name": "Running",
-        "description": "Gait analysis, stride detection, speed tracking",
+        "description": "Gait analysis, stride detection, speed tracking, joint kinematics",
         "icon": "🏃",
-        "metrics": ["total_distance_m", "avg_speed_kmh", "avg_cadence_spm"],
-    },
-    "basketball": {
-        "display_name": "Basketball",
-        "description": "Shot detection, player tracking, possession analysis",
-        "icon": "🏀",
-        "metrics": ["shots_attempted", "shots_made", "possession_time_s"],
-    },
-    "football": {
-        "display_name": "Football",
-        "description": "Player tracking, pass detection, possession stats",
-        "icon": "⚽",
-        "metrics": ["passes_completed", "possession_pct", "sprint_count"],
-    },
-    "volleyball": {
-        "display_name": "Volleyball",
-        "description": "Spike detection, jump height, serve analysis",
-        "icon": "🏐",
-        "metrics": ["spikes_detected", "max_jump_height_cm", "spike_speed_kmh"],
+        "metrics": ["total_distance_m", "avg_speed_kmh", "avg_cadence_spm", "stride_length_m", "gait_symmetry"],
     },
 }
 

@@ -26,6 +26,11 @@ export default function App() {
     try {
       const data = await fetchSports();
       setSports(data);
+      if (data && data.length > 0 && !selectedSport) {
+        // Auto-select running or first available sport
+        const runningSport = data.find((s) => s.name === 'running');
+        setSelectedSport(runningSport ? runningSport.name : data[0].name);
+      }
     } catch (err) {
       setStatusMessage('Failed to load registered sports: ' + err.message);
       setStatusType('error');
