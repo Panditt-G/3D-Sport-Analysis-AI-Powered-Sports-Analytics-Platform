@@ -7,7 +7,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -92,8 +92,8 @@ async def upload_video(file: UploadFile = File(...)):
 
 
 @app.post("/api/analyze/{sport_name}")
-async def analyze_video(sport_name: str, file: UploadFile = File(...)):
-    """Upload and analyze a video for a specific sport."""
+async def analyze_video(sport_name: str, background_tasks: BackgroundTasks, file: UploadFile = File(...)):
+    """Upload and start background analysis for a specific sport."""
     if not SportRegistry.is_registered(sport_name):
         raise HTTPException(status_code=404, detail=f"Sport '{sport_name}' not registered")
 
@@ -107,15 +107,33 @@ async def analyze_video(sport_name: str, file: UploadFile = File(...)):
 
     # Get sport config
     sport_config = config_service.get_sport_config(sport_name)
+    
+    import uuid
+    from datetime import datetime
+    session_id = str(uuid.uuid4())[:8]
+    
+    # Initialize session status as processing
+    analysis_service._sessions[session_id] = {
+        "session_id": session_id,
+        "sport": sport_name,
+        "status": "processing",
+        "timestamp": datetime.now().isoformat()
+    }
 
-    # Run analysis
-    result = analysis_service.analyze_video(
+    # Run analysis in background
+    background_tasks.add_task(
+        analysis_service.analyze_video,
         video_path=save_result["saved_path"],
         sport_name=sport_name,
         config=sport_config,
+        session_id=session_id
     )
 
-    return result
+    return {
+        "session_id": session_id, 
+        "status": "processing", 
+        "message": "Analysis started in background"
+    }
 
 
 @app.get("/api/results/{session_id}")
