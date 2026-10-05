@@ -18,22 +18,20 @@ def cleanup_old_files(directory: str, max_age_hours: int = 24):
     max_age_seconds = max_age_hours * 3600
     deleted_count = 0
 
-    print(f"Cleaning up files older than {max_age_hours} hours in {directory}...")
+    print(f"Cleaning up files older than {max_age_hours} hours in {directory} and its subdirectories...")
 
-    for filename in os.listdir(directory):
-        filepath = os.path.join(directory, filename)
-        
-        # We only clean up files (videos, json results), not directories
-        if os.path.isfile(filepath):
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            filepath = os.path.join(root, filename)
             file_creation_time = os.path.getctime(filepath)
             
             if (current_time - file_creation_time) > max_age_seconds:
                 try:
                     os.remove(filepath)
                     deleted_count += 1
-                    print(f"Deleted old file: {filename}")
+                    print(f"Deleted old file: {filepath}")
                 except Exception as e:
-                    print(f"Failed to delete {filename}: {e}")
+                    print(f"Failed to delete {filepath}: {e}")
                     
     print(f"Cleanup complete. Deleted {deleted_count} files.")
 
