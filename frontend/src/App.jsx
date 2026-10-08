@@ -37,12 +37,14 @@ export default function App() {
     }
   };
 
-  const loadSessionsList = async () => {
+  const loadSessionsList = () => {
     try {
-      const data = await fetchSessions();
-      setSessions(data);
+      const savedSessions = localStorage.getItem('sports_ai_sessions');
+      if (savedSessions) {
+        setSessions(JSON.parse(savedSessions));
+      }
     } catch (err) {
-      console.log('Sessions load skipped:', err.message);
+      console.log('Local sessions load skipped:', err.message);
     }
   };
 
@@ -61,30 +63,72 @@ export default function App() {
 
     setIsAnalyzing(true);
     setProgress(20);
-    setStatusMessage(`Running AI analysis pipeline for ${selectedSport}...`);
+    setStatusMessage(`Uploading video for ${selectedSport}...`);
     setStatusType('info');
     setAnalysisResult(null);
 
     try {
-      setProgress(60);
-      const result = await analyzeVideo(selectedSport, selectedFile);
-      setProgress(100);
+      // 1. Upload and start background processing
+      const initialResult = await analyzeVideo(selectedSport, selectedFile);
+      setProgress(40);
 
-      if (result.status === 'error') {
-        setStatusMessage('Analysis failed: ' + (result.error || 'Unknown error'));
+      if (initialResult.status === 'error') {
+        setStatusMessage('Analysis failed to start: ' + (initialResult.error || 'Unknown error'));
         setStatusType('error');
-      } else {
-        setAnalysisResult(result);
-        setStatusMessage(
-          `Analysis complete! Session ID: ${result.session_id} (${result.frames_processed} frames)`
-        );
-        setStatusType('success');
-        loadSessionsList();
+        setIsAnalyzing(false);
+        return;
       }
+
+      const sessionId = initialResult.session_id;
+      setStatusMessage(`AI is processing video in background. Session: ${sessionId}...`);
+
+      // 2. Poll the server every 3 seconds until completed
+      const pollInterval = setInterval(async () => {
+        try {
+          const result = await fetchResults(sessionId);
+          
+          if (result && result.status !== 'processing') {
+            clearInterval(pollInterval);
+            setProgress(100);
+
+            if (result.status === 'error') {
+              setStatusMessage('Analysis failed: ' + (result.error || 'Unknown error'));
+              setStatusType('error');
+            } else {
+              setAnalysisResult(result);
+              setStatusMessage(
+                `Analysis complete! Session ID: ${result.session_id} (${result.frames_processed} frames)`
+              );
+              setStatusType('success');
+              
+              // Save session locally to browser cache (localStorage)
+              const newSession = {
+                session_id: result.session_id,
+                sport: result.sport,
+                status: result.status,
+                frames_processed: result.frames_processed,
+                timestamp: result.timestamp || new Date().toISOString()
+              };
+              const existingSessions = JSON.parse(localStorage.getItem('sports_ai_sessions') || '[]');
+              const updatedSessions = [newSession, ...existingSessions];
+              localStorage.setItem('sports_ai_sessions', JSON.stringify(updatedSessions));
+
+              loadSessionsList();
+            }
+            setIsAnalyzing(false);
+          } else {
+            // Still processing, update progress bar artificially
+            setProgress((prev) => (prev < 90 ? prev + 5 : 90));
+          }
+        } catch (err) {
+          // If 404, it might still be initializing, just wait for the next tick
+          console.log("Polling...", err.message);
+        }
+      }, 3000);
+
     } catch (err) {
-      setStatusMessage('Error during analysis: ' + err.message);
+      setStatusMessage('Error starting analysis: ' + err.message);
       setStatusType('error');
-    } finally {
       setIsAnalyzing(false);
     }
   };

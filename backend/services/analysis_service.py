@@ -23,6 +23,7 @@ class AnalysisService:
         sport_name: str,
         config: Optional[Dict[str, Any]] = None,
         max_frames: int = 300,
+        session_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         """
         Run full analysis pipeline on a video file.
@@ -36,7 +37,8 @@ class AnalysisService:
         Returns:
             Complete analysis result dict.
         """
-        session_id = str(uuid.uuid4())[:8]
+        if session_id is None:
+            session_id = str(uuid.uuid4())[:8]
 
         # Get pipeline and analytics from registry
         pipeline = SportRegistry.get_pipeline(sport_name, config=config)
