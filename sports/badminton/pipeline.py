@@ -28,6 +28,7 @@ class BadmintonPipeline(BaseSportPipeline):
             "detections_count": 0
         }
         
+        result["boxes"] = []
         if self.detector is not None:
             try:
                 # Direct prediction on frame numpy array
@@ -37,6 +38,9 @@ class BadmintonPipeline(BaseSportPipeline):
                         cls_id = int(box.cls[0])
                         class_names = ['shuttlecock', 'badminton_racket', 'player']
                         cls_name = class_names[cls_id] if cls_id < len(class_names) else 'unknown'
+                        conf = float(box.conf[0])
+                        xyxy = box.xyxy[0].tolist()
+                        
                         if cls_name == 'shuttlecock':
                             result['shuttlecock_detected'] = True
                         elif cls_name == 'badminton_racket':
@@ -44,6 +48,11 @@ class BadmintonPipeline(BaseSportPipeline):
                         elif cls_name == 'player':
                             result['player_detected'] = True
                         result['detections_count'] += 1
+                        result['boxes'].append({
+                            "class_name": cls_name,
+                            "confidence": conf,
+                            "bbox": xyxy
+                        })
             except Exception as e:
                 logger.debug(f"Frame {frame_idx} detection error: {e}")
 

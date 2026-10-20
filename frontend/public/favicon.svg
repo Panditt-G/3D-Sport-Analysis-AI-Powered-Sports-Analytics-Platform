@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#4F46E5" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background Squircle / Shield -->
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#grad)" filter="url(#shadow)" />
+
+  <!-- Target Reticle / Vision Ring -->
+  <circle cx="32" cy="32" r="18" fill="none" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="4 3" />
+  
+  <!-- Shuttlecock / Dynamic Sports Crest -->
+  <!-- Cork head -->
+  <circle cx="32" cy="38" r="5" fill="#FFFFFF" />
+  <circle cx="32" cy="38" r="3.5" fill="#F8FAFC" />
+  
+  <!-- Feathers expanding up -->
+  <path d="M 27 36 L 20 20 L 26 22 L 32 20 L 38 22 L 44 20 L 37 36 Z" fill="#FFFFFF" fill-opacity="0.95" />
+  
+  <!-- Inner feather rib lines -->
+  <path d="M 32 38 L 32 20 M 29 36 L 24 21 M 35 36 L 40 21" stroke="#4F46E5" stroke-width="1.2" stroke-linecap="round" />
+
+  <!-- AI Pulse Star Accent in Top-Right -->
+  <path d="M 46 10 L 47.5 15 L 52.5 16.5 L 47.5 18 L 46 23 L 44.5 18 L 39.5 16.5 L 44.5 15 Z" fill="#FDE047" />
+</svg>
