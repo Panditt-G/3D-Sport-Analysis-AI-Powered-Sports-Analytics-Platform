@@ -1,52 +1,43 @@
 import React from 'react';
-import { History, CheckCircle, AlertCircle } from 'lucide-react';
+import { History, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function PastSessions({ sessions, onLoadSession }) {
   if (!sessions || sessions.length === 0) {
-    return (
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-6">
-        <div className="flex items-center space-x-2 mb-3">
-          <History className="w-5 h-5 text-slate-500" />
-          <h2 className="text-lg font-bold text-slate-800">Past Analysis Sessions</h2>
-        </div>
-        <p className="text-xs text-slate-400">No previous sessions found.</p>
-      </div>
-    );
+    return null;
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mb-6">
-      <div className="flex items-center space-x-2 mb-4">
-        <History className="w-5 h-5 text-blue-600" />
-        <h2 className="text-lg font-bold text-slate-800">Past Analysis Sessions</h2>
+    <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm">
+      <div className="flex items-center space-x-2.5 pb-4 mb-4 border-b border-slate-100">
+        <History className="w-5 h-5 text-indigo-600" />
+        <div>
+          <h3 className="text-base font-bold text-slate-900">Recent Sessions</h3>
+          <p className="text-xs text-slate-500">Quickly reload your previous AI video analyses</p>
+        </div>
       </div>
 
-      <div className="divide-y divide-slate-100">
-        {sessions.map((sess) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {sessions.slice(0, 6).map((sess) => (
           <div
             key={sess.session_id}
             onClick={() => onLoadSession(sess.session_id)}
-            className="py-3 flex items-center justify-between hover:bg-slate-50 px-2 rounded-lg cursor-pointer transition-colors"
+            className="p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-indigo-50/40 hover:border-indigo-300 cursor-pointer transition-all flex items-center justify-between group"
           >
             <div className="flex items-center space-x-3">
-              {sess.status === 'completed' ? (
-                <CheckCircle className="w-4 h-4 text-emerald-500" />
-              ) : (
-                <AlertCircle className="w-4 h-4 text-rose-500" />
-              )}
+              <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs uppercase">
+                {sess.sport?.slice(0, 2) || 'SP'}
+              </div>
               <div>
-                <p className="text-xs font-bold text-slate-800">
-                  Session #{sess.session_id} <span className="font-normal text-slate-500">• {sess.sport}</span>
+                <p className="text-xs font-bold text-slate-900 capitalize">
+                  {sess.sport} Analysis
                 </p>
                 <p className="text-[11px] text-slate-400">
-                  {sess.frames_processed} frames processed
+                  {sess.frames_processed} frames • {sess.timestamp ? new Date(sess.timestamp).toLocaleDateString() : 'Recent'}
                 </p>
               </div>
             </div>
 
-            <span className="text-xs font-mono text-slate-400">
-              {sess.timestamp ? new Date(sess.timestamp).toLocaleDateString() : ''}
-            </span>
+            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all" />
           </div>
         ))}
       </div>

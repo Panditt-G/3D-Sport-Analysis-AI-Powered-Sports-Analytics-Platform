@@ -37,6 +37,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Ensure output directory exists and mount static outputs
+os.makedirs(config_service.output_dir, exist_ok=True)
+app.mount("/api/outputs", StaticFiles(directory=config_service.output_dir), name="outputs")
+
 # --- API ROUTES ---
 
 @app.get("/api")
