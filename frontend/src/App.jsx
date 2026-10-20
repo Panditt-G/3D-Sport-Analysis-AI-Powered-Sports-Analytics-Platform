@@ -27,12 +27,12 @@ export default function App() {
       const data = await fetchSports();
       setSports(data);
       if (data && data.length > 0 && !selectedSport) {
-        // Auto-select running or first available sport
-        const runningSport = data.find((s) => s.name === 'running');
-        setSelectedSport(runningSport ? runningSport.name : data[0].name);
+        // Auto-select badminton or first available sport
+        const badmintonSport = data.find((s) => s.name === 'badminton');
+        setSelectedSport(badmintonSport ? badmintonSport.name : data[0].name);
       }
     } catch (err) {
-      setStatusMessage('Failed to load registered sports: ' + err.message);
+      setStatusMessage('Unable to connect to Sports API: ' + err.message);
       setStatusType('error');
     }
   };
@@ -68,21 +68,19 @@ export default function App() {
     setAnalysisResult(null);
 
     try {
-      // 1. Upload and start background processing
       const initialResult = await analyzeVideo(selectedSport, selectedFile);
       setProgress(40);
 
       if (initialResult.status === 'error') {
-        setStatusMessage('Analysis failed to start: ' + (initialResult.error || 'Unknown error'));
+        setStatusMessage('Analysis failed: ' + (initialResult.error || 'Unknown error'));
         setStatusType('error');
         setIsAnalyzing(false);
         return;
       }
 
       const sessionId = initialResult.session_id;
-      setStatusMessage(`AI is processing video in background. Session: ${sessionId}...`);
+      setStatusMessage(`AI is processing video in background (Session #${sessionId})...`);
 
-      // 2. Poll the server every 3 seconds until completed
       const pollInterval = setInterval(async () => {
         try {
           const result = await fetchResults(sessionId);
@@ -97,11 +95,10 @@ export default function App() {
             } else {
               setAnalysisResult(result);
               setStatusMessage(
-                `Analysis complete! Session ID: ${result.session_id} (${result.frames_processed} frames)`
+                `Analysis complete! Processed ${result.frames_processed} frames successfully.`
               );
               setStatusType('success');
               
-              // Save session locally to browser cache (localStorage)
               const newSession = {
                 session_id: result.session_id,
                 sport: result.sport,
@@ -117,11 +114,9 @@ export default function App() {
             }
             setIsAnalyzing(false);
           } else {
-            // Still processing, update progress bar artificially
             setProgress((prev) => (prev < 90 ? prev + 5 : 90));
           }
         } catch (err) {
-          // If 404, it might still be initializing, just wait for the next tick
           console.log("Polling...", err.message);
         }
       }, 3000);
@@ -148,10 +143,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
       <Header />
 
-      <main className="max-w-6xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
         <SportSelector
           sports={sports}
           selectedSport={selectedSport}
@@ -174,8 +169,8 @@ export default function App() {
         <PastSessions sessions={sessions} onLoadSession={handleLoadSession} />
       </main>
 
-      <footer className="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400">
-        Sports AI Analytics Platform • Built with React & Tailwind CSS v3
+      <footer className="bg-white border-t border-slate-200/80 py-5 text-center text-xs text-slate-400">
+        Sports AI Studio • Computer Vision &amp; Kinematics Platform
       </footer>
     </div>
   );

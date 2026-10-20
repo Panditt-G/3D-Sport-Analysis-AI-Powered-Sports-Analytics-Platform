@@ -4,9 +4,10 @@
 FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
 
-# Install dependencies first (for faster caching)
+# Install dependencies first (for faster caching) 
 COPY frontend/package*.json ./
 RUN npm install
+
 
 # Copy all frontend code and build it
 COPY frontend/ ./
@@ -38,6 +39,9 @@ COPY backend/ ./backend/
 COPY configs/ ./configs/
 COPY sports/ ./sports/
 COPY data/ ./data/
+COPY model/ ./model/
+COPY yolov8n.pt ./
+COPY pose_landmarker_full.task ./
 
 # Copy the built React website from Stage 1 into the backend
 # (Your server.py expects to find it at frontend/dist)
