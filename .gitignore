@@ -3,16 +3,29 @@ __pycache__/
 *$py.class
 *.so
 .env
+.env.*
+!.env.example
 venv/
 env/
 ENV/
 .venv/
+.pytest_cache/
 
-# Data and Model Weights
+# Model weights: ignore by default...
 *.pt
 *.pth
 *.onnx
 *.engine
+
+# ...but track the models the app needs to run
+!model/
+!model/*.pt
+!yolov8n.pt
+
+# Training output
+runs/
+
+# Data
 data/raw/*
 data/processed/*
 data/datasets/*
@@ -22,13 +35,15 @@ data/outputs/*
 !data/datasets/.gitkeep
 !data/outputs/.gitkeep
 
-# Node dependencies & builds
-frontend/node_modules/
-frontend/dist/
+# Node dependencies & builds (any level)
+node_modules/
+dist/
+
+# Logs
+*.log
 
 # IDE and OS
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
-
