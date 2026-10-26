@@ -1,43 +1,52 @@
 import React from 'react';
-import { History, CheckCircle, ArrowRight } from 'lucide-react';
+import { History, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function PastSessions({ sessions, onLoadSession }) {
   if (!sessions || sessions.length === 0) {
-    return null;
+    return (
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl mb-6 text-slate-100">
+        <div className="flex items-center space-x-2 mb-2">
+          <History className="w-4 h-4 text-slate-400" />
+          <h2 className="text-sm font-bold text-slate-200">Past Analysis Sessions</h2>
+        </div>
+        <p className="text-xs text-slate-500">No previous sessions found.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm">
-      <div className="flex items-center space-x-2.5 pb-4 mb-4 border-b border-slate-100">
-        <History className="w-5 h-5 text-indigo-600" />
-        <div>
-          <h3 className="text-base font-bold text-slate-900">Recent Sessions</h3>
-          <p className="text-xs text-slate-500">Quickly reload your previous AI video analyses</p>
-        </div>
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl mb-6 text-slate-100">
+      <div className="flex items-center space-x-2 mb-4">
+        <History className="w-4 h-4 text-emerald-400" />
+        <h2 className="text-sm font-bold text-slate-200">Past Analysis Sessions</h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-        {sessions.slice(0, 6).map((sess) => (
+      <div className="divide-y divide-slate-800">
+        {sessions.map((sess) => (
           <div
             key={sess.session_id}
             onClick={() => onLoadSession(sess.session_id)}
-            className="p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/50 hover:bg-indigo-50/40 hover:border-indigo-300 cursor-pointer transition-all flex items-center justify-between group"
+            className="py-3 flex items-center justify-between hover:bg-slate-800/50 px-3 rounded-xl cursor-pointer transition"
           >
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs uppercase">
-                {sess.sport?.slice(0, 2) || 'SP'}
-              </div>
+              {sess.status === 'completed' ? (
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+              ) : (
+                <AlertCircle className="w-4 h-4 text-rose-400" />
+              )}
               <div>
-                <p className="text-xs font-bold text-slate-900 capitalize">
-                  {sess.sport} Analysis
+                <p className="text-xs font-bold text-slate-200">
+                  Session #{sess.session_id} <span className="font-normal text-slate-400">• {sess.sport}</span>
                 </p>
-                <p className="text-[11px] text-slate-400">
-                  {sess.frames_processed} frames • {sess.timestamp ? new Date(sess.timestamp).toLocaleDateString() : 'Recent'}
+                <p className="text-[11px] text-slate-500">
+                  {sess.frames_processed} frames processed
                 </p>
               </div>
             </div>
 
-            <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all" />
+            <span className="text-[11px] font-mono text-slate-500">
+              {sess.timestamp ? new Date(sess.timestamp).toLocaleDateString() : ''}
+            </span>
           </div>
         ))}
       </div>

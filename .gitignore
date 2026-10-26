@@ -1,31 +1,35 @@
+# ─── Python Cache & Compiled Files ───────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# ─── Environment & Secrets ────────────────────────────────────────────────────
 .env
 .env.*
 !.env.example
+
+# ─── Virtual Environments (teammates install their own via requirements.txt) ──
 venv/
 env/
 ENV/
 .venv/
+
+# ─── Test Cache ───────────────────────────────────────────────────────────────
 .pytest_cache/
 
-# Model weights: ignore by default...
-*.pt
-*.pth
-*.onnx
-*.engine
+# ─── Model Weights: ALL tracked so teammates can run without re-downloading ───
+# yolov8n.pt              (6.2 MB)  – YOLO object detection
+# yolov8n-pose.pt         (6.5 MB)  – YOLO athlete pose estimation
+# pose_landmarker_full.task (9 MB)  – MediaPipe BlazePose 3D model
+# model/badminton_detector_v1.pt (21.5 MB) – Custom badminton detector
+#
+# All model files are tracked in git (no *.pt exclusion).
 
-# ...but track the models the app needs to run
-!model/
-!model/*.pt
-!yolov8n.pt
-
-# Training output
+# ─── Training Output (not needed by teammates) ────────────────────────────────
 runs/
 
-# Data
+# ─── Data: raw videos and processed outputs are NOT pushed (too large) ────────
 data/raw/*
 data/processed/*
 data/datasets/*
@@ -35,14 +39,17 @@ data/outputs/*
 !data/datasets/.gitkeep
 !data/outputs/.gitkeep
 
-# Node dependencies & builds (any level)
+# ─── Node.js: teammates run `npm install` inside frontend/ ───────────────────
 node_modules/
-dist/
+frontend/node_modules/
 
-# Logs
+# ─── Frontend Build Artifact (teammates build with `npm run build`) ───────────
+frontend/dist/
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
 *.log
 
-# IDE and OS
+# ─── IDE & OS Files ───────────────────────────────────────────────────────────
 .vscode/
 .idea/
 .DS_Store

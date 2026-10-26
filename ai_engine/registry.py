@@ -6,12 +6,6 @@ from ai_engine.base.base_analytics import BaseSportAnalytics
 # Sport metadata: description, icon, supported metrics
 # Pre-configured metadata for running pipeline
 SPORT_METADATA = {
-    "badminton": {
-        "display_name": "Badminton",
-        "description": "Shuttlecock tracking, racket velocity, smash mechanics & court coverage",
-        "icon": "🏸",
-        "metrics": ["racket_velocity_kmh", "smash_probability", "court_coverage_percent", "stroke_accuracy"],
-    },
     "running": {
         "display_name": "Running",
         "description": "Gait analysis, stride detection, speed tracking, joint kinematics",

@@ -1,0 +1,82 @@
+{
+  "sport": "badminton",
+  "movement": "overhead_clear",
+  "version": "1.0.0",
+  "coach_review_status": "approved",
+  "review_notes": "Expert badminton coach baseline for offensive and defensive overhead clear technique.",
+  "recommended_camera_view": "side_view",
+  "phase_timeline": {
+    "preparation": { "start_pct": 0.0, "end_pct": 0.25 },
+    "backswing": { "start_pct": 0.25, "end_pct": 0.50 },
+    "forward_swing": { "start_pct": 0.50, "end_pct": 0.65 },
+    "contact": { "start_pct": 0.65, "end_pct": 0.72 },
+    "follow_through": { "start_pct": 0.72, "end_pct": 0.88 },
+    "recovery": { "start_pct": 0.88, "end_pct": 1.0 }
+  },
+  "benchmark_metrics": {
+    "contact_elbow_angle": {
+      "metric_name": "Hitting Elbow Angle at Contact",
+      "phase": "contact",
+      "target_range": [165.0, 180.0],
+      "optimal": 174.0,
+      "unit": "degrees",
+      "description": "Elbow must achieve near-full extension at the highest attainable contact point above the hitting shoulder."
+    },
+    "backswing_elbow_angle": {
+      "metric_name": "Elbow Flexion in Backswing",
+      "phase": "backswing",
+      "target_range": [65.0, 95.0],
+      "optimal": 78.0,
+      "unit": "degrees",
+      "description": "Elbow cocked and raised behind the head to load the triceps and shoulder rotators."
+    },
+    "contact_shoulder_elevation": {
+      "metric_name": "Shoulder Elevation at Contact",
+      "phase": "contact",
+      "target_range": [155.0, 178.0],
+      "optimal": 168.0,
+      "unit": "degrees",
+      "description": "Upper arm aligned close to vertical, preventing low flat impact."
+    },
+    "trunk_forward_tilt": {
+      "metric_name": "Trunk Forward Tilt at Impact",
+      "phase": "contact",
+      "target_range": [5.0, 18.0],
+      "optimal": 10.0,
+      "unit": "degrees",
+      "description": "Controlled forward torso inclination transferring body weight through the shuttle."
+    }
+  },
+  "ghost_reference_poses": {
+    "contact": {
+      "nose": { "x": 0.48, "y": 0.22, "conf": 0.95 },
+      "left_shoulder": { "x": 0.44, "y": 0.32, "conf": 0.95 },
+      "right_shoulder": { "x": 0.53, "y": 0.30, "conf": 0.95 },
+      "left_elbow": { "x": 0.40, "y": 0.42, "conf": 0.90 },
+      "right_elbow": { "x": 0.56, "y": 0.18, "conf": 0.95 },
+      "left_wrist": { "x": 0.38, "y": 0.48, "conf": 0.90 },
+      "right_wrist": { "x": 0.59, "y": 0.07, "conf": 0.95 },
+      "left_hip": { "x": 0.46, "y": 0.55, "conf": 0.95 },
+      "right_hip": { "x": 0.52, "y": 0.54, "conf": 0.95 },
+      "left_knee": { "x": 0.44, "y": 0.72, "conf": 0.95 },
+      "right_knee": { "x": 0.54, "y": 0.73, "conf": 0.95 },
+      "left_ankle": { "x": 0.43, "y": 0.90, "conf": 0.95 },
+      "right_ankle": { "x": 0.55, "y": 0.91, "conf": 0.95 }
+    },
+    "backswing": {
+      "nose": { "x": 0.48, "y": 0.24, "conf": 0.95 },
+      "left_shoulder": { "x": 0.43, "y": 0.33, "conf": 0.95 },
+      "right_shoulder": { "x": 0.53, "y": 0.32, "conf": 0.95 },
+      "left_elbow": { "x": 0.38, "y": 0.30, "conf": 0.90 },
+      "right_elbow": { "x": 0.59, "y": 0.28, "conf": 0.95 },
+      "left_wrist": { "x": 0.35, "y": 0.22, "conf": 0.90 },
+      "right_wrist": { "x": 0.52, "y": 0.33, "conf": 0.95 },
+      "left_hip": { "x": 0.46, "y": 0.55, "conf": 0.95 },
+      "right_hip": { "x": 0.52, "y": 0.54, "conf": 0.95 },
+      "left_knee": { "x": 0.45, "y": 0.73, "conf": 0.95 },
+      "right_knee": { "x": 0.53, "y": 0.74, "conf": 0.95 },
+      "left_ankle": { "x": 0.44, "y": 0.91, "conf": 0.95 },
+      "right_ankle": { "x": 0.54, "y": 0.91, "conf": 0.95 }
+    }
+  }
+}
