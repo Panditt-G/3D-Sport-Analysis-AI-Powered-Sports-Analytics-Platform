@@ -1,0 +1,38 @@
+name: badminton
+display_name: "Badminton"
+version: "1.0.0"
+category: "racket_sports"
+default_pose_model: "mediapipe_blazepose"
+supported_camera_views:
+  - "side_view"
+  - "rear_diagonal"
+  - "front_view"
+
+supported_movements:
+  overhead_clear:
+    name: "Overhead Clear"
+    description: "Defensive or offensive high trajectory stroke played from the backcourt to the opponent's rear boundary."
+    phases:
+      - id: "preparation"
+        name: "Preparation & Stance"
+        description: "Side-on stance, racket arm raised with non-racket arm balancing."
+      - id: "backswing"
+        name: "Backswing & Cocking"
+        description: "Racket drops behind back, elbow flexes and elevates above shoulder."
+      - id: "forward_swing"
+        name: "Forward Acceleration"
+        description: "Kinetic chain rotation: hips, torso, shoulder rotation, arm upward reach."
+      - id: "contact"
+        name: "Impact / Contact Point"
+        description: "Highest attainable point, arm fully extended slightly in front of hitting shoulder."
+      - id: "follow_through"
+        name: "Follow-Through"
+        description: "Racket naturally rotates across non-dominant side, deceleration of arm."
+      - id: "recovery"
+        name: "Recovery & Base"
+        description: "Scissor kick completion and rapid return to court center base."
+    primary_metrics:
+      - "contact_elbow_angle"
+      - "backswing_elbow_height"
+      - "trunk_inclination_angle"
+      - "racket_arm_extension_ratio"
